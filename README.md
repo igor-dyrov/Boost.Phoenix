@@ -124,4 +124,20 @@ int main()
 перегружает операторы вроде ***>***, ***&&***, ***%*** и ***==*** для разных типов. Таким образом условия сразу не проверяются. Вместо этого функциональные объекты объединяются для создания более мощных функциональных объектов. В зависимости от операндов они могут автоматически использоваться в качестве функциональных объектов. Или же Вы можете вызывать вспомогательную функцию
 типа ***val()***.
 
-```Пример 39.5. boost::phoenix::placeholders::arg1 и boost::phoenix::val()```
+``Пример 39.5. boost::phoenix::placeholders::arg1 и boost::phoenix::val().``
+
+<a name="example395"></a>
+```
+c++
+#include <boost/phoenix/phoenix.hpp>
+#include <iostream>
+
+int main()
+{
+  using namespace boost::phoenix::placeholders;
+  std::cout << arg1(1, 2, 3, 4, 5) << '\n';
+
+  auto v = boost::phoenix::val(2);
+  std::cout << v() << '\n';
+}
+```
