@@ -127,8 +127,7 @@ int main()
 ``Пример 39.5. boost::phoenix::placeholders::arg1 и boost::phoenix::val().``
 
 <a name="example395"></a>
-```
-c++
+```c++
 #include <boost/phoenix/phoenix.hpp>
 #include <iostream>
 
