@@ -179,3 +179,49 @@ int main()
 Обратите внимание на то, что Вы должны определить тип ***result_type***. Boost.Phoenix использует его, чтобы определить тип возвращаемого значения оператора ***operator()***.
 
 ***is_odd()*** является функцией, которую Вы можете использовать как ***val()***. Обе функции возвращают функциональный объект. При вызове параметры передаются в ***operator()***. В [Примере 39.6](example396) это означает, что ***std::count_if()*** по-прежнему считает нечетные числа.
+
+``Пример 39.7. Преобразование стандартных функций в Phoenix функцию``
+<a name="example397"></a>
+```c++
+#include <boost/phoenix/phoenix.hpp>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+bool is_odd_function(int i) { return i % 2 == 1; }
+
+BOOST_PHOENIX_ADAPT_FUNCTION(bool, is_odd, is_odd_function, 1)
+
+int main()
+{
+  std::vector<int> v{1, 2, 3, 4, 5};
+
+  using namespace boost::phoenix::placeholders;
+  std::cout << std::count_if(v.begin(), v.end(), is_odd(arg1)) << '\n';
+}
+```
+Если Вы хотите преобразовать обычную функцию в Phoenix функцию, Вы можете действовать как в [Примере 39.7](example397). Вам не обязательно определять функциональный объект, как в предыдущем примере. 
+
+Используйте макрос ***BOOST_PHOENIX_ADAPT_FUNCTION***, чтобы преобразовать обычную функцию в Phoenix функцию. Передайте тип возвращаемого значения, имя функции и количество параметров в макрос.
+
+``Пример 39.8. Phoenix функции и boost::phoenix::bind()``
+<a name="example398"></a>
+```c++
+#include <boost/phoenix/phoenix.hpp>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+bool is_odd(int i) { return i % 2 == 1; }
+
+int main()
+{
+  std::vector<int> v{1, 2, 3, 4, 5};
+
+  using namespace boost::phoenix;
+  using namespace boost::phoenix::placeholders;
+  std::cout << std::count_if(v.begin(), v.end(), bind(is_odd, arg1)) << '\n';
+}
+```
+
+
